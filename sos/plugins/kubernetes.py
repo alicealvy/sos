@@ -114,10 +114,11 @@ class kubernetes(Plugin, RedHatPlugin):
 
                 if self.get_option('podlogs'):
                     k_cmd = '%s get %s' % (kube_cmd, knsp)
-                    r = self.get_command_output('%s get pods' % k_cmd)
+                    r = self.get_command_output('%s pods' % k_cmd)
                     if r['status'] == 0:
                         pods = [p.split()[0] for p in
                                 r['output'].splitlines()[1:]]
+                        k_cmd = '%s %s' % (kube_cmd, knsp)   
                         for pod in pods:
                             self.add_cmd_output('%s logs %s' % (k_cmd, pod))
 
